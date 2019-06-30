@@ -43,12 +43,12 @@ public class AbstractFile {
         }
     }
     
-    public static void addEntry(String key, String response) {
+    public static boolean addEntry(String key, String response) {
     	String path = "Chat-Responses";
+    	Boolean existsFlag = false;
     	if (config.get(path) != null) {
     		
 			List<Map<?, ?>> currVal = config.getMapList(path);
-			Boolean existsFlag = false;
 			
 			for (Map<?, ?> val : currVal) {
 				if (val.containsKey(key)) {
@@ -79,15 +79,17 @@ public class AbstractFile {
 	    		config.set(path, currVal);
 	    		saveConfig();
 			}
+			
     	}
+    	return existsFlag;
     }
     
-    public static void addEntryList(String key, List<String> response) {
+    public static boolean addEntryList(String key, List<String> response) {
     	String path = "Chat-Responses";
+    	Boolean existsFlag = false;
     	if (config.get(path) != null) {
     		
 			List<Map<?, ?>> currVal = config.getMapList(path);
-			Boolean existsFlag = false;
 			
 			for (Map<?, ?> val : currVal) {
 				if (val.containsKey(key)) {
@@ -118,7 +120,9 @@ public class AbstractFile {
 	    		config.set(path, currVal);
 	    		saveConfig();
 			}
+			
     	}
+		return existsFlag;
     }
     
     public static List<List<String>> getResponses() {
