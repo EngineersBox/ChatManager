@@ -25,7 +25,7 @@ public class AbstractFile {
                 e.printStackTrace();
             }
         }
-        AbstractFile.config = YamlConfiguration.loadConfiguration(file);config.addDefault("User-Details.UseSQL", false);
+        AbstractFile.config = YamlConfiguration.loadConfiguration(file);
         config.addDefault("Configuration.Link-Colour", "&4");
         config.addDefault("Configuration.Link-Underline", true);
         config.addDefault("Chat-Responses", null);
@@ -43,16 +43,21 @@ public class AbstractFile {
     
     public static void addEntry(String path, String entry) {
     	if (config.contains(path)) {
-    		if (config.get(path) instanceof List) {
-    			List<String> currVal = config.getStringList(path);
-    			currVal.add(entry);
-    			config.set(path, currVal);
-    		} else {
-    			List<String> newVal = new ArrayList<String>();
-    			newVal.add(config.getString(path));
-    			newVal.add(entry);
-    			config.set(path, newVal);
-    		}
+			List<String> currVal = config.getStringList(path);
+			currVal.add(entry);
+			config.set(path, currVal);
+    	} else {
+    		List<String> currVal = new ArrayList<String>();
+    		currVal.add(entry);
+    		config.set(path, currVal);
+    	}
+    }
+    
+    public static void addEntryList(String path, List<String> entry) {
+    	if (config.contains(path)) {
+			List<String> currVal = config.getStringList(path);
+			currVal.addAll(entry);
+			config.set(path, currVal);
     	} else {
     		config.set(path, entry);
     	}
