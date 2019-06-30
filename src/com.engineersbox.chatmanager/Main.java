@@ -8,7 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.engineersbox.chatmanager.AbstractFile;
-import com.engineersbox.chatmanager.Commands;
+//import com.engineersbox.chatmanager.Commands;
+
+import com.engineersbox.chatmanager.Config;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -20,8 +22,9 @@ public class Main extends JavaPlugin implements Listener {
     		getDataFolder().mkdirs();
     	}
 		
+		new Config(this);
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
-		getCommand("cm").setExecutor(new Commands());
+		//getCommand("cm").setExecutor(new Commands());
 	}
 	
 	@Override
