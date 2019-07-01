@@ -2,6 +2,9 @@ package com.engineersbox.chatmanager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,8 +29,8 @@ public class AbstractFile {
         AbstractFile.config = YamlConfiguration.loadConfiguration(file);
         config.addDefault("Configuration.Link-Colour", "&4");
         config.addDefault("Configuration.Link-Underline", true);
-        config.addDefault("Player-Config", null);
-        config.addDefault("Chat-Responses", null);
+        config.addDefault("Player-Config", new ArrayList<String>());
+        config.addDefault("Chat-Responses", new HashMap<String, List<String>>());
         config.options().copyDefaults(true);
         saveConfig();
     }
