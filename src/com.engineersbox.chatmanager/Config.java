@@ -105,10 +105,23 @@ public class Config extends AbstractFile {
     	return list;
     }
     
-    @SuppressWarnings("unlikely-arg-type")
 	public static boolean checkPlayerConfig(Player p) {
-    	List<Boolean> players = config.getBooleanList("Player-Config");
-    	return players.contains(p.getUniqueId());
+    	List<String> players = config.getStringList("Player-Config");
+    	return players.contains(p.getUniqueId().toString());
+    }
+    
+    public static void addPlayerConfig(Player p) {
+    	List<String> players = config.getStringList("Player-Config");
+    	players.add(p.getUniqueId().toString());
+    	config.set("Player-Config", players);
+    	saveConfig();
+    }
+    
+    public static void removePlayerConfig(Player p) {
+    	List<String> players = config.getStringList("Player-Config");
+    	players.remove(p.getUniqueId().toString());
+    	config.set("Player-Config", players);
+    	saveConfig();
     }
     
     public static String getULine() {
