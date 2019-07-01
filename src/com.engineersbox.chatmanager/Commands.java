@@ -3,10 +3,13 @@ package com.engineersbox.chatmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import com.engineersbox.chatmanager.Main;
 
 public class Commands implements CommandExecutor {
 
@@ -20,11 +23,11 @@ public class Commands implements CommandExecutor {
 				
 				if (args.length == 0) {
 					
-					p.sendMessage("error");
+					p.sendMessage("Help Section Here");
 					
 				} else if (args.length > 0) {
 					
-					if (args[0].equalsIgnoreCase("add")) {
+					if ((args[0].equalsIgnoreCase("add")) && (p.hasPermission("cm.add"))) {
 						
 						String key = args[1];
 						List<String> val = new ArrayList<String>();
@@ -39,6 +42,26 @@ public class Commands implements CommandExecutor {
 							p.sendMessage(Main.prefix + "Keyword does not exist, added new response");
 						}
 						return true;
+					} else if (((args[0].equalsIgnoreCase("messages")) || (args[0].equalsIgnoreCase("msg"))) && (p.hasPermission("cm.msg"))) {
+						Boolean configState = Config.checkPlayerConfig(p);
+						if (args[1].equalsIgnoreCase("enable")) {
+							if (configState.equals(false)) {
+								p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Already Enabled!");
+							} else {
+								Config.removePlayerConfig(p);
+								p.sendMessage(Main.prefix + "Enabled Messages");
+							}
+						} else if (args[1].equalsIgnoreCase("disable")) {
+							if (configState.equals(true)) {
+								p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Already Disabled!");
+							} else {
+								Config.addPlayerConfig(p);
+								p.sendMessage(Main.prefix + "Disabling Messages");
+							}
+						} else {
+							p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Invalid Syntax!");
+							p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Usage: " + ChatColor.ITALIC + "/cm messages <enbale/disable>");
+						}
 					}
 				}
 			}
