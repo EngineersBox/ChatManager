@@ -41,6 +41,7 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		getCommand("cm").setExecutor(new Commands());
 		getCommand("cm add").setExecutor(new Commands());
+		getCommand("cm messages").setExecutor(new Commands());
 	}
 	
 	@Override
@@ -126,7 +127,7 @@ public class Main extends JavaPlugin implements Listener {
 				}
 				
 				TextComponent linkClickable = new TextComponent(ComponentSerializer.parse("{text: \"" + format(Config.getLinkColour().toString()) + format(Config.getULine().toString()) + convURL + "\",clickEvent:{action:open_url,value:\"" + convURL + "\"}}"));
-				TextComponent plugin_prefix = new TextComponent(new ComponentBuilder(format(prefix)).create());
+				TextComponent plugin_prefix = new TextComponent(new ComponentBuilder(prefix + ChatColor.WHITE).create());
 				TextComponent pre_split = new TextComponent();
 				TextComponent post_split = new TextComponent();
 				
