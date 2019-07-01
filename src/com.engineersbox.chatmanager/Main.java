@@ -156,8 +156,6 @@ public class Main extends JavaPlugin implements Listener {
 				} else {
 					p.spigot().sendMessage(plugin_prefix, pre_split);
 				}
-				
-				p.sendMessage(val);
 			}
 		}
 		
