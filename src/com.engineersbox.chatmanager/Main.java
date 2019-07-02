@@ -41,6 +41,7 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		getCommand("cm").setExecutor(new Commands());
 		getCommand("cm add").setExecutor(new Commands());
+		getCommand("cm remove").setExecutor(new Commands());
 		getCommand("cm messages").setExecutor(new Commands());
 	}
 	
@@ -89,7 +90,7 @@ public class Main extends JavaPlugin implements Listener {
 				for (Map<?, ?> str : responses) {
 					if (str.containsKey(val)) {
 						List<?> keyResponses = (List<?>) str.get(val);
-						response.add(getRandomElement(keyResponses));
+						response.add(getRandomElement(keyResponses).toString());
 					}
 				}
 			}
