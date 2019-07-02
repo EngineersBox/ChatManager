@@ -37,11 +37,12 @@ public class Commands implements CommandExecutor {
 						}
 						
 						if (Config.addEntryList(key, val)) {
-							p.sendMessage(Main.prefix + "Keyword already exists, added to stored responses.");
+							p.sendMessage(Main.prefix + "Keyword already exists, added to stored responses");
 						} else {
 							p.sendMessage(Main.prefix + "Keyword does not exist, added new response");
 						}
 						return true;
+						
 					} else if (((args[0].equalsIgnoreCase("messages")) || (args[0].equalsIgnoreCase("msg"))) && (p.hasPermission("cm.msg"))) {
 						Boolean configState = Config.checkPlayerConfig(p);
 						if (args[1].equalsIgnoreCase("enable")) {
@@ -62,6 +63,18 @@ public class Commands implements CommandExecutor {
 							p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Invalid Syntax!");
 							p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Usage: " + ChatColor.ITALIC + "/cm messages <enbale/disable>");
 						}
+					} else if (((args[0].equalsIgnoreCase("remove")) || (args[0].equalsIgnoreCase("r"))) && (p.hasPermission("cm.remove"))) {
+						
+						String key = args[1];
+						Boolean removeKey = Config.removeEntry(key);
+						if (removeKey) {
+							p.sendMessage(Main.prefix + "Removed Entry");
+						} else {
+							p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Keyword and response does not exist");
+						}
+						
+					} else {
+						p.sendMessage(Main.prefix + ChatColor.DARK_PURPLE + "Invalid Command!");
 					}
 				}
 			}
