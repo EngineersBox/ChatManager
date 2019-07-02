@@ -1,6 +1,6 @@
 name: ChatManager
 main: com.engineersbox.chatmanager.Main
-version: 1.1
+version: 1.2
 author: EngineersBox
 commands:
     cm:
