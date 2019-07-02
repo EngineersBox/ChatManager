@@ -11,6 +11,11 @@ commands:
         description: Add a keyword and response to config
         usage: /cm add <key> <response> [<response> .. <response>]
         permission: cm.add
+    cm remove:
+        description: Remove a keyword and response from config
+        usage: /cm remove <key>
+        permission: cm.remove
+        aliases: [r]
     cm messages:
         description: Configure visibility of messages from server
         usage: /cm messages <enable/disable>
@@ -22,12 +27,16 @@ permissions:
         children:
             cm.use: true
             cm.add: true
+            cm.remove: true
             cm.msg: true
     cm.use:
         description: Allows The Use Of The cm Command
         default: true
     cm.add:
         description: Allows The Use Of The add Command
+        default: op
+    cm.remove:
+        description: Allows The Use Of The remove Command
         default: op
     cm.msg:
         description: Allows The Use Of The messages Command
