@@ -34,7 +34,7 @@ public class Config extends AbstractFile {
 					Map<String, List<String>> newVal = new HashMap<String, List<String>>();
 					newVal.put(key, currResponses);
 					
-					currVal.remove(currVal.indexOf(val));
+					currVal.remove(val);
 					currVal.add(newVal);
 					config.set(path, currVal);
 					saveConfig();
@@ -75,7 +75,7 @@ public class Config extends AbstractFile {
 					Map<String, List<String>> newVal = new HashMap<String, List<String>>();
 					newVal.put(key, currResponses);
 					
-					currVal.remove(currVal.indexOf(val));
+					currVal.remove(val);
 					currVal.add(newVal);
 					config.set(path, currVal);
 					saveConfig();
@@ -98,6 +98,26 @@ public class Config extends AbstractFile {
 			
     	}
 		return existsFlag;
+    }
+    
+    public static boolean removeEntry(String key) {
+    	String path = "Chat-Responses";
+    	Boolean removedFlag = false;
+    	if (config.get(path) != null) {
+    		
+    		List<Map<?, ?>> currVal = config.getMapList(path);
+    		
+    		for (Map<?, ?> val : currVal) {
+    			if (val.containsKey(key)) {
+    				currVal.remove(val);
+    				config.set(path, currVal);
+    				saveConfig();
+    				removedFlag = true;
+    				break;
+    			}
+    		}
+    	}
+    	return removedFlag;
     }
     
     public static List<Map<?, ?>> getResponses() {
@@ -126,7 +146,7 @@ public class Config extends AbstractFile {
     
     public static String getULine() {
     	
-    	Boolean booleanData = config.getBoolean("Configuration.Link-UnderLine");
+    	Boolean booleanData = config.getBoolean("Configuration.Link-Underline");
     	
     	if (booleanData.equals(true)) {
     		return "&N";
