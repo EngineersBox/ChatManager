@@ -20,6 +20,8 @@ import com.engineersbox.chatmanager.AbstractFile;
 
 import com.engineersbox.chatmanager.Config;
 
+import com.engineersbox.chatmanager.updater.SpigotUpdater;
+import com.engineersbox.chatmanager.updater.Updaters;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -38,6 +40,10 @@ public class Main extends JavaPlugin implements Listener {
     	}
 		
 		new Config(this);
+		/* TODO: Replace <rID> with resource ID
+		SpigotUpdater updater = new SpigotUpdater(this, <rID>);
+    	Updaters.checkVersion(updater);
+		*/
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		getCommand("cm").setExecutor(new Commands());
 		getCommand("cm add").setExecutor(new Commands());
@@ -95,69 +101,27 @@ public class Main extends JavaPlugin implements Listener {
 				}
 			}
 			
-			for (String val : response) {
+			for (String resp : response) {
 				
-				String convURL = "";
-				Boolean hasURL = false;
-				Boolean canSplit = false;
+				String[] respSplit = resp.split(" ");
+				TextComponent msgToPlayer = new TextComponent(new ComponentBuilder(prefix + ChatColor.WHITE).create());
 				
-				if (val.contains(" ")) {
+				for (String val : respSplit) {
 					
-					chatSplit = val.split(" ");
-					
-					for (int i = 0; i < chatSplit.length; i++) {
-						
-						if ((chatSplit[i].contains("https")) || (chatSplit[i].contains("http"))) {
-							convURL = chatSplit[i].toString();
-							hasURL = true;
-							canSplit = true;
-							break;
-							
-						} else {
-							hasURL = false;
-						}
-					}
-					
-				} else  if ((!val.contains(" ")) && (val.contains("http")) || (val.contains("http"))) {
-					convURL = val;
-					canSplit = false;
-					hasURL = true;
-				} else {
-					canSplit = false;
-					hasURL = false;
-				}
-				
-				TextComponent linkClickable = new TextComponent(ComponentSerializer.parse("{text: \"" + format(Config.getLinkColour().toString()) + format(Config.getULine().toString()) + convURL + "\",clickEvent:{action:open_url,value:\"" + convURL + "\"}}"));
-				TextComponent plugin_prefix = new TextComponent(new ComponentBuilder(prefix + ChatColor.WHITE).create());
-				TextComponent pre_split = new TextComponent();
-				TextComponent post_split = new TextComponent();
-				
-				if ((hasURL.equals(true)) && (canSplit.equals(true))) {
-					
-					String[] messageSplit = val.split(convURL);
-					String messageFirst = messageSplit[0].toString();
-					
-					if (messageSplit.length == 2) {
-						String messageSecond = messageSplit[1].toString();
-						post_split.addExtra(messageSecond);
+					if ((val.contains("https://")) || (val.contains("http://")) || (val.contains("www."))) {
+						TextComponent linkClickable = new TextComponent(ComponentSerializer.parse("{text: \"" + format(Config.getLinkColour().toString()) + format(Config.getULine().toString()) + val + "\",clickEvent:{action:open_url,value:\"" + val + "\"}} "));
+						msgToPlayer.addExtra(linkClickable);
+						msgToPlayer.addExtra(ChatColor.RESET + " " + ChatColor.WHITE);
 					} else {
-						
-						post_split.addExtra("");
+						TextComponent msgContent = new TextComponent(new ComponentBuilder(format(val)).create());
+						msgToPlayer.addExtra(msgContent);
+						msgToPlayer.addExtra(" ");
 					}
 					
-					pre_split.addExtra(messageFirst);
-					
-				} else if ((hasURL.equals(true)) && (canSplit.equals(false))) {
-					pre_split.addExtra(linkClickable);
-				} else {
-					pre_split.addExtra(val);
 				}
 				
-				if ((hasURL.equals(true)) && (canSplit.equals(true))) {
-					p.spigot().sendMessage(plugin_prefix, pre_split, linkClickable, post_split);
-				} else {
-					p.spigot().sendMessage(plugin_prefix, pre_split);
-				}
+				p.spigot().sendMessage(msgToPlayer);
+				
 			}
 		}
 		
