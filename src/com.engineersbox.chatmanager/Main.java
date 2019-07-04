@@ -20,8 +20,6 @@ import com.engineersbox.chatmanager.AbstractFile;
 
 import com.engineersbox.chatmanager.Config;
 
-import com.engineersbox.chatmanager.updater.SpigotUpdater;
-import com.engineersbox.chatmanager.updater.Updaters;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -49,6 +47,9 @@ public class Main extends JavaPlugin implements Listener {
 		getCommand("cm add").setExecutor(new Commands());
 		getCommand("cm remove").setExecutor(new Commands());
 		getCommand("cm messages").setExecutor(new Commands());
+		getCommand("cm help").setExecutor(new Commands());
+		getCommand("cm version").setExecutor(new Commands());
+		getCommand("cm reload").setExecutor(new Commands());
 	}
 	
 	@Override
